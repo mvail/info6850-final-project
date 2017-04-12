@@ -58,6 +58,18 @@ def index(request):
 
     })
 
+def datatables(request):
+
+    patents = Patent.objects.all()
+    keywords = Keywords.objects.all()
+    categories = Uspc.objects.all()
+
+    return render(request, 'reports/datatables.html', {
+        'patents': patents,
+        'keywords': keywords,
+        'categories': categories,
+    })
+
 def detail(request, pid):
     try:
         patent = Patent.objects.get(pk=pid)
