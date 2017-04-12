@@ -20,9 +20,6 @@
     <!-- Custom CSS -->
     <link href="http://margaretvail.pythonanywhere.com/static/reports/startbootstrap-sb-admin-2-gh-pages//dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="http://margaretvail.pythonanywhere.com/static/reports/startbootstrap-sb-admin-2-gh-pages//vendor/morrisjs/morris.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="http://margaretvail.pythonanywhere.com/static/reports/startbootstrap-sb-admin-2-gh-pages//vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -39,7 +36,10 @@
     <!-- Custom Theme JavaScript -->
     <script src="http://margaretvail.pythonanywhere.com/static/reports/startbootstrap-sb-admin-2-gh-pages//dist/js/sb-admin-2.js"></script>
 
-
+    <!-- https://morrisjs.github.io/morris.js/index.html -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
 
 </head>
@@ -90,6 +90,54 @@
 
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-table fa-fw"></i> Line Chart - Keywords
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="line-example"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-table fa-fw"></i> Data Table - Keywords
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                        <table id="" class="display">
+                                            <thead>
+                                                <tr>
+                                                    <th>Week</th>
+                                                    <th>Word</th>
+                                                    <th>Word Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for keyword in keywords %}
+                                                <tr>
+                                                    <td>{{ keyword.week }}</td>
+                                                    <td>{{ keyword.word }}</td>
+                                                    <td>{{ keyword.word_count }}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
 
 
 
@@ -98,7 +146,6 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -135,42 +182,18 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-
+                    <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-table fa-fw"></i> Data Table - Keywords
+                            <i class="fa fa-table fa-fw"></i> Data Table - Top Words
                         </div>
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="table-responsive">
-                                        <table id="" class="display">
-                                            <thead>
-                                                <tr>
-                                                    <th>Week</th>
-                                                    <th>Word</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for keyword in keywords %}
-                                                <tr>
-                                                    <td>{{ keyword.week }}</td>
-                                                    <td>{{ keyword.word }}</td>
-                                                </tr>
-                                                {% endfor %}
 
-                                            </tbody>
-                                        </table>
-
-
-
-                                    </div>
-                                    <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
                     </div>
-
+                    <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-4 -->
             </div>
@@ -191,7 +214,26 @@
             $('table.display').DataTable();
         } );
     </script>
-
+    <script type="text/javascript">
+        /*
+         * Play with this code and it'll update in the panel opposite.
+         *
+         * Why not try some of the options above?
+         */
+        Morris.Line({
+          element: 'line-example',
+          parseTime: false,
+          data: [
+                {% for topWord in topWords %}
+                    { 'word': '{{ topWord.word }}', a: {{ topWord.week1 }}, b: {{ topWord.week2 }}, c: {{ topWord.week3 }}, d: {{ topWord.week4 }}},
+                {% endfor %}
+          ],
+          xkey: 'word',
+          xLabels: "week",
+          ykeys: ['a', 'b', 'c', 'd'],
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+        });
+    </script>
 </body>
 
 </html>

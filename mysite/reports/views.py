@@ -21,10 +21,41 @@ def index(request):
     keywords = Keywords.objects.all()
     categories = Uspc.objects.all()
 
+    topWords_SQL = Keywords.objects.raw('SELECT *, SUM(word_count) as word_count2 FROM reports_keywords GROUP BY word ORDER BY word_count2 DESC LIMIT 10')
+
+    topWords = []
+
+    for topWord_SQL in topWords_SQL:
+        row = {}
+        word = topWord_SQL.word
+        row['word'] = word
+
+        week1_SQL = Keywords.objects.raw('SELECT * FROM reports_keywords WHERE word = %s AND week = 1', [word])
+        for week1 in week1_SQL:
+            row['week1'] = week1.word_count
+
+        week2_SQL = Keywords.objects.raw('SELECT * FROM reports_keywords WHERE word = %s AND week = 2', [word])
+        for week2 in week2_SQL:
+            row['week2'] = week2.word_count
+
+        week3_SQL = Keywords.objects.raw('SELECT * FROM reports_keywords WHERE word = %s AND week = 3', [word])
+        for week3 in week3_SQL:
+            row['week3'] = week3.word_count
+
+        week4_SQL = Keywords.objects.raw('SELECT * FROM reports_keywords WHERE word = %s AND week = 4', [word])
+        for week4 in week4_SQL:
+            row['week4'] = week4.word_count
+
+        topWords.append(row)
+
+
+
     return render(request, 'reports/index.html', {
         'patents': patents,
         'keywords': keywords,
         'categories': categories,
+        'topWords': topWords,
+
     })
 
 def detail(request, pid):
