@@ -5,9 +5,9 @@ from collections import defaultdict
 import string
 from nltk.corpus import stopwords
 
-path = 'C:/Users/mvail.DS/Dropbox/MLIS/2016-2017/INFO 6850/Final Project/'
-dbpath = 'C:/Users/mvail.DS/Dropbox/MLIS/2016-2017/INFO 6850/Final Project/django/mysite/db.sqlite3'
-#path = 'C:/Users/margaret/Dropbox/MLIS/2016-2017/INFO 6850/Final Project/'
+path = '/home/margaretvail/data/'
+dbpath = '/home/margaretvail/mysite/db.sqlite3'
+
 
 def connectDB():
     dblocation = dbpath
@@ -23,9 +23,9 @@ def getDataForKeywords():
 
         line = row[0].strip()
         week = row[1]
-       
+
         data[week].append(line)
-    
+
     db.close()
 
     return data
@@ -35,7 +35,7 @@ data = getDataForKeywords()
 stops = set(stopwords.words('english'))
 
 def clean_text(d):
-    '''removes punctuation from all abstracts, returns 
+    '''removes punctuation from all abstracts, returns
     dict keyed by year, with cleaned abstract text as list values'''
 
     remove_punctuation_map = dict((ord(char), None) for char in string.punctuation)
@@ -45,14 +45,14 @@ def clean_text(d):
             cleaned = abstract.lower().translate(remove_punctuation_map)
             new_d[week].append(cleaned)
     return new_d
-        
+
 cleaneddata = clean_text(data)
-        
+
 from collections import Counter
 
 def common_words(d, n):
     '''takes a dictionary keyed by year, with lists of abstracts as values
-    returns a dictionary keyed by the same years, but values 
+    returns a dictionary keyed by the same years, but values
     will be a list of the n most common words from that year'''
     new_d = {}
     for year in d:
@@ -71,21 +71,21 @@ def common_words(d, n):
         #ADD YOUR LIST OF TOP WORDS TO new_d AT THE CORRECT YEAR
     return new_d
 
-        
+
 topwords = common_words(cleaneddata,50);
 
 
 def insertTopwords(topwords):
     db = connectDB()
     c = db.cursor()
-    
+
     for week in topwords:
         for word in topwords[week]:
-            SQL = "INSERT INTO reports_keywords(word,word_count,week) VALUES ('%s', %d, %d);" % (word, word_count, week)
+            SQL = "INSERT INTO reports_keywords(word,week) VALUES ('%s', %d, %d);" % (word, week)
             c.execute(SQL)
-    
+
     db.commit()
     db.close()
-            
+
 
 insertTopwords(topwords);
