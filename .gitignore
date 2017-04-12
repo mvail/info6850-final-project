@@ -3,3 +3,11 @@ nltk_data
 .gitconfig
 .viminfo
 mysite/db.sqlite3
+.local/bin
+.virtualenvs
+.bashrc
+.my.cnf
+.profile
+.pythonstartup.py
+.vimrc
+README.txt
