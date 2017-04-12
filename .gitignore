@@ -1,0 +1,5 @@
+data
+nltk_data
+.gitconfig
+.viminfo
+mysite/db.sqlite3
