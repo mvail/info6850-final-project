@@ -5,9 +5,9 @@ from collections import defaultdict
 import string
 from nltk.corpus import stopwords
 
-path = '/home/margaretvail/data/'
-dbpath = '/home/margaretvail/mysite/db.sqlite3'
-
+path = 'C:/Users/mvail.DS/Dropbox/MLIS/2016-2017/INFO 6850/Final Project/'
+dbpath = 'C:/Users/mvail.DS/Dropbox/MLIS/2016-2017/INFO 6850/Final Project/django/mysite/db.sqlite3'
+#path = 'C:/Users/margaret/Dropbox/MLIS/2016-2017/INFO 6850/Final Project/'
 
 def connectDB():
     dblocation = dbpath
@@ -66,13 +66,13 @@ def common_words(d, n):
         top_words = []
         top = Counter(words).most_common(n)
         for tword in top:
-            top_words.append(tword[0])
+            top_words.append(tword)
         new_d[year] = top_words
         #ADD YOUR LIST OF TOP WORDS TO new_d AT THE CORRECT YEAR
     return new_d
 
 
-topwords = common_words(cleaneddata,50);
+topwords = common_words(cleaneddata,200);
 
 
 def insertTopwords(topwords):
@@ -81,7 +81,7 @@ def insertTopwords(topwords):
 
     for week in topwords:
         for word in topwords[week]:
-            SQL = "INSERT INTO reports_keywords(word,week) VALUES ('%s', %d, %d);" % (word, week)
+            SQL = "INSERT INTO reports_keywords(word,word_count,week) VALUES ('%s', %d, %d);" % (word[0], word[1], week)
             c.execute(SQL)
 
     db.commit()
