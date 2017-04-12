@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TechnoFuture Dashboard - Data Tables</title>
+    <title>TechnoFuture Dashboard: Patent Category Tracking</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="http://margaretvail.pythonanywhere.com/static/reports/startbootstrap-sb-admin-2-gh-pages//vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -98,7 +98,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Data Tables</h1>
+                    <h1 class="page-header">Patent Category Tracking</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -106,114 +106,23 @@
 
             <div class="row">
                 <div class="col-lg-12">
+
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-table fa-fw"></i> Data Table - Patents
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Line Chart - Keywords
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table id="" class="display">
-                                            <thead>
-                                                <tr>
-                                                    <th>Patent #</th>
-                                                    <th>USPC</th>
-                                                    <th>Claims</th>
-                                                    <th>Inventor</th>
-                                                    <th>Week</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for patent in patents %}
-                                                <tr>
-                                                    <td><a href="/reports/{{ patent.pid }}/">{{ patent.pid }}</a></td>
-                                                    <td>{{ patent.uspc }}</td>
-                                                    <td>{{ patent.claims }}</td>
-                                                    <td>{{ patent.inventors }}</td>
-                                                    <td>{{ patent.week }}</td>
-                                                </tr>
-                                                {% endfor %}
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.table-responsive -->
+                            <div id="line-example"></div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-table fa-fw"></i> Data Table - Keywords
-                        </div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                        <table id="" class="display">
-                                            <thead>
-                                                <tr>
-                                                    <th>Week</th>
-                                                    <th>Word</th>
-                                                    <th>Word Count</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for keyword in keywords %}
-                                                <tr>
-                                                    <td>{{ keyword.week }}</td>
-                                                    <td>{{ keyword.word }}</td>
-                                                    <td>{{ keyword.word_count }}</td>
-                                                </tr>
-                                                {% endfor %}
 
-                                            </tbody>
-                                        </table>
-
-
-
-                                    </div>
-                                    <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-table fa-fw"></i> Data Table - US Patent Categories
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table id="" class="display">
-                                            <thead>
-                                                <tr>
-                                                    <th>USPC</th>
-                                                    <th>Week</th>
-                                                    <th>Patent Count</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for category in categories %}
-                                                <tr>
-                                                    <td>{{ category.uspc }}</td>
-                                                    <td>{{ category.week }}</td>
-                                                    <td>{{ category.patent_count }}</td>
-                                                </tr>
-                                                {% endfor %}
-
-                                            </tbody>
-                                        </table>
-
-
-
-                                    </div>
-                                    <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-8 -->
+
             </div>
             <!-- /.row -->
         </div>
@@ -232,7 +141,26 @@
             $('table.display').DataTable();
         } );
     </script>
-
+    <script type="text/javascript">
+        /*
+         * Play with this code and it'll update in the panel opposite.
+         *
+         * Why not try some of the options above?
+         */
+        Morris.Line({
+          element: 'line-example',
+          parseTime: false,
+          data: [
+                {% for topWord in topWords %}
+                    { 'word': '{{ topWord.word }}', a: {{ topWord.week1 }}, b: {{ topWord.week2 }}, c: {{ topWord.week3 }}, d: {{ topWord.week4 }}},
+                {% endfor %}
+          ],
+          xkey: 'word',
+          xLabels: "week",
+          ykeys: ['a', 'b', 'c', 'd'],
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+        });
+    </script>
 </body>
 
 </html>
