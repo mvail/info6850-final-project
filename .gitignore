@@ -11,3 +11,4 @@ mysite/db.sqlite3
 .pythonstartup.py
 .vimrc
 README.txt
+.sqlite_history
