@@ -110,7 +110,7 @@
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Line Chart - Keywords
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Line Chart - Top 10 US Patent Categories Changes over week
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -119,6 +119,185 @@
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-table fa-fw"></i> US Patent Categories that changed more than 10% by week
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="" class="display">
+                                            <thead>
+                                                <tr>
+                                                    <th>USPC</th>
+                                                    <th>Patent Count Week 1</th>
+                                                    <th>Patent Count Week 2</th>
+                                                    <th>Patent Count Week 3</th>
+                                                    <th>Patent Count Week 4</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for category in categoriesChangedByTenPercent %}
+                                                <tr>
+                                                    <td>{{ category.uspc }}</td>
+                                                    <td>{{ category.week1 }}</td>
+                                                    <td>{{ category.week2 }}</td>
+                                                    <td>{{ category.week3 }}</td>
+                                                    <td>{{ category.week4 }}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-table fa-fw"></i> Top 10 US Patent Categories - Week 1
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="" class="display">
+                                            <thead>
+                                                <tr>
+                                                    <th>USPC</th>
+                                                    <th>Patent Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for category in top10_categories_week1 %}
+                                                <tr>
+                                                    <td>{{ category.uspc }}</td>
+                                                    <td>{{ category.patent_count }}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-table fa-fw"></i> Top 10 US Patent Categories - Week 2
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="" class="display">
+                                            <thead>
+                                                <tr>
+                                                    <th>USPC</th>
+                                                    <th>Patent Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for category in top10_categories_week2 %}
+                                                <tr>
+                                                    <td>{{ category.uspc }}</td>
+                                                    <td>{{ category.patent_count }}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-table fa-fw"></i> Top 10 US Patent Categories - Week 3
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="" class="display">
+                                            <thead>
+                                                <tr>
+                                                    <th>USPC</th>
+                                                    <th>Patent Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for category in top10_categories_week3%}
+                                                <tr>
+                                                    <td>{{ category.uspc }}</td>
+                                                    <td>{{ category.patent_count }}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-table fa-fw"></i> Top 10 US Patent Categories - Week 4
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="" class="display">
+                                            <thead>
+                                                <tr>
+                                                    <th>USPC</th>
+                                                    <th>Patent Count</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for category in top10_categories_week4 %}
+                                                <tr>
+                                                    <td>{{ category.uspc }}</td>
+                                                    <td>{{ category.patent_count }}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+
+
 
                 </div>
                 <!-- /.col-lg-8 -->
@@ -138,8 +317,10 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('table.display').DataTable();
-        } );
+            $('table.display').DataTable( {
+                    "order": [[ 1, "desc" ]]
+                } );
+            } );
     </script>
     <script type="text/javascript">
         /*
@@ -151,15 +332,18 @@
           element: 'line-example',
           parseTime: false,
           data: [
-                {% for topWord in topWords %}
-                    { 'word': '{{ topWord.word }}', a: {{ topWord.week1 }}, b: {{ topWord.week2 }}, c: {{ topWord.week3 }}, d: {{ topWord.week4 }}},
+                {% for topCategory in topCategories %}
+                    { 'uspc': '{{ topCategory.uspc }}', a: {{ topCategory.week1 }}, b: {{ topCategory.week2 }}, c: {{ topCategory.week3 }}, d: {{ topCategory.week4 }}},
                 {% endfor %}
           ],
-          xkey: 'word',
+          xkey: 'uspc',
           xLabels: "week",
           ykeys: ['a', 'b', 'c', 'd'],
           labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
         });
+
+
+
     </script>
 </body>
 
